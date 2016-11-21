@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <!-- CDN for bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- CDN for fontawesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--  Style Sheets -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- start-smoth-scrolling -->
+	<script type="text/javascript" src="/javascripts/move-top.js"></script>
+	<script type="text/javascript" src="/javascripts/easing.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
+		});
+	</script>
+	<!-- start-smoth-scrolling -->
+	<!-- start menu -->
+	<link href="/stylesheets/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="/javascripts/megamenu.js"></script>
+	<script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+	<script src="/javascripts/menu_jquery.js"></script>
+	<script src="/javascripts/chekout.js"> </script>
+	<link href='http://fonts.googleapis.com/css?family=Corben:400,700' rel='stylesheet' type='text/css'>
+	<!-- Personal Style Sheets -->
+    <link rel='stylesheet' href='/stylesheets/mystyle.css' />
+  </head>
+  <body>
+	{{> header }}
+
+    {{{body}}}
+
+	{{> footer }}
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
