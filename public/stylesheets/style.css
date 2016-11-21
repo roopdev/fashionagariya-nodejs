@@ -748,13 +748,13 @@ p.non span{
 	background-position:108px !important;
 }
 .welcome:before{
-	background: url(../images/5.png) no-repeat 0px 40px;
+	background: url() no-repeat 0px 40px;
 	display: block;
 	content: '';
 	width: 360px;
 }
 .welcome:after{
-	background: url(../images/6.png) no-repeat 0px -20px;
+	background: url() no-repeat 0px -20px;
 	display: block;
 	content: '';
 	width: 455px;
@@ -1938,7 +1938,7 @@ p span.overline{
 	color:green;
 }
 .contact-left input[type="text"],.contact-left input[type="email"],.contact-left textarea{
-	background:none;
+	
 	border:1px solid #C6C6C6;
 	color: #424341;
 	padding: 15px 10px;
@@ -1964,7 +1964,7 @@ p span.overline{
 	font-size:20px;
 	padding:13px 0;
 	width:30%;
-	background:none;
+	
 	border:1px solid #C6C6C6;
 	transition:.5s all;
 	-webkit-transition:.5s all;

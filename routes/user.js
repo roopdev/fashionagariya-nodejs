@@ -10,4 +10,7 @@ router.get('/register', function(req, res, next) {
   res.render('user/register');
 });
 
+router.get('/contact', function(req, res, next) {
+  res.render('user/contact', { title: 'FashionNagariya' });
+});
 module.exports = router;

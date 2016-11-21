@@ -10,4 +10,10 @@ router.get('/single', function(req, res, next) {
   res.render('shop/single', { title: 'FashionNagariya' });
 });
 
+router.get('/products', function(req, res, next) {
+  res.render('shop/products', { title: 'FashionNagariya' });
+});
+
+
+
 module.exports = router;
