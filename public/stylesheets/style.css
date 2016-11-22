@@ -6,6 +6,7 @@ html, body{
 }
 p{
 	margin:0;
+	color:#0059b3;
 }
 ul,label{
 	margin:0;
@@ -24,7 +25,7 @@ body a:hover{
 }
 .logo a{
 	font-size: 2em;
-	color:#7200ff;
+	color:#04007a;
 	text-decoration: none;
 	background: url(../images/1.png) no-repeat 0px 0px;
 	display: block;
@@ -33,7 +34,7 @@ body a:hover{
 }
 .logo a:hover{
 	text-decoration:none;
-	color:#ff0000;
+	color:#ff6600;
 }
 .top_left{
 	float: right;
@@ -719,6 +720,7 @@ background: url(../images/3.png) no-repeat -66px 0px;
 }
 .welcome {
   display: flex;
+  background-image: url("/images/blank.gif");
 }
 .welcome-info h3{
 	color:#204056;
@@ -729,7 +731,7 @@ p.non,p.rep{
   font-size: 14px;
   text-transform: capitalize;
   margin: 1em 0 0;
-  color: #B6B6B6;
+  color: #003366;
 }
 p.non span{
 	display:block;
