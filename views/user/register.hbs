@@ -3,36 +3,47 @@
 		<div class="container">
 			<div class="reg">
 				<h3>Register Now</h3>
-				<p>Welcome, please enter the following details to continue.</p>
+				{{#if hasErrors}}
+					<div class="alert alert-danger">
+						{{# each messages }}
+							<p>{{ this }}</p>
+						{{/each}}
+					</div>
+				{{/if}} <br>
+
+				<h4>Welcome, please enter the following details to continue.</h4>
 				<p>If you have previously registered with us, <a href="/user/login">click here</a></p>
-				 <form>
+
+				 <form action="/user/register" method="post">
 					<ul>
 						<li class="text-info">First Name: </li>
-						<li><input type="text" value=""></li>
+						<li><input type="text" id="firstName" name="firstName" class="form-control"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Last Name: </li>
-						<li><input type="text" value=""></li>
+						<li><input type="text" id="lastName" name="lastName" class="form-control"></li>
 					 </ul>				 
 					<ul>
 						<li class="text-info">Email: </li>
-						<li><input type="text" value=""></li>
+						<li><input type="email" id="email" name="email" class="form-control"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Password: </li>
-						<li><input type="password" value=""></li>
+						<li><input type="password" id="password" name="password" class="form-control"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Re-enter Password:</li>
-						<li><input type="password" value=""></li>
+						<li><input type="password" id="password" name="password" class="form-control"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Mobile Number:</li>
-						<li><input type="text" value=""></li>
-					</ul>						
+						<li><input type="number" id="number" name="number" class="form-control"></li>
+					</ul>
+					<input type="hidden" name="_csrf" value="{{ csrfToken }}">						
 					<input type="submit" value="Register Now">
 					<p class="click">By clicking this button, you agree to our  <a href="/user/login">Policy Terms and Conditions.</a></p> 
 				</form>
+				<p class="click text-center">If you unable to view the verification mail or the link is expired,  <a href="/user/resend">Click here to Resend the mail!</a></p>
 			</div>
 		</div>
 	</div>

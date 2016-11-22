@@ -7,14 +7,21 @@
 		<div class="header_top-sec">
 			<div class="top_right">
 				<ul>
-					<li><a href="/user/contact">Contact</a></li>|
+				{{# if login }} 
 					<li><a href="/user/login">Track Order</a></li>
+				{{ else }} 
+					<li><a href="/user/contact">Contact</a></li>
+				{{/if}}					
 				</ul>
 			</div>
 			<div class="top_left">
 				<ul>
 					<li class="top_link">Email:<a href="mailto:info@example.com">info@fashionnagariya.com</a></li>|
-					<li class="top_link"><a href="/user/login">My Account</a></li>					
+					{{# if login }}
+					<li class="top_link"><a href="/user/logout">Logout</a></li> 
+					{{ else }} 
+					<li class="top_link"><a href="/user/login">My Account</a></li>
+					{{/ if }}				
 				</ul>
 			</div>
 			<div class="clearfix"> </div>
@@ -30,7 +37,7 @@
 		</div>
 		<div class="header_right">
 			<div class="cart box_1">
-				<a href="/checkout/:id">
+				<a href="/shopping-cart">
 				<h3> <div class="total">
 					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
 					<img src="images/cart1.png" alt=""/></h3>
