@@ -804,22 +804,18 @@ p.non span{
 	position: relative;
 }
 .banner-bottom1-grid1 h3{
-	color: #fff;
-	font-weight: 600;
+	color: #0f03af;
+	font-weight: 400;
 	font-size: 1.3em;
 	margin: 0;
 	text-transform: capitalize;
 }
 .banner-bottom1-grid1 p{
-	color:#F6F6F6;
+	color:#0f03af;
 	font-size:14px;
 	line-height:1.8em;
 	margin: 1em 0 0em;
 	width: 85%;
-}
-.jel-video iframe{
-	width:100%;
-	min-height:295px;
 }
 /*-- //banner-bottom1 --*/
 /*-- banner-bottom --*/

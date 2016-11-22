@@ -9,6 +9,7 @@
   "author": "roop",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.3.0",
     "body-parser": "~1.15.1",
     "connect-flash": "^0.1.1",
@@ -31,6 +32,5 @@
     "passport-local": "^1.0.0",
     "sendgrid": "^4.7.1",
     "serve-favicon": "~2.3.0"
-    
   }
 }

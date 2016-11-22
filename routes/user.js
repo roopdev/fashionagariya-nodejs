@@ -40,7 +40,7 @@ router.get('/register', function(req, res, next) {
 router.post('/register', passport.authenticate('local.signup', {
 	failureRedirect: '/user/register',
 	failureFlash: true
-}), function (req, res, next) {
+}),function (req, res, next) {
 	if (req.session.oldUrl) {
 		var oldUrl = req.session.oldUrl;
 		req.session.oldUrl = null;

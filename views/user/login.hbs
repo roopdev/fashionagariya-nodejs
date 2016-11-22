@@ -4,13 +4,21 @@
 		<div class="login-grids">
 			<div class="col-md-6 log">
 					 <h3>Login</h3>
+					 {{#if hasErrors}}
+						<div class="alert alert-danger">
+					 {{# each messages }}
+						<p>{{ this }}</p>
+					 {{/each}}
+						</div>
+					 {{/if}}
 					 <div class="strip"></div>
 					 <p>Welcome, please enter the following to continue.</p>
-					 <form>
+					 <form action="/user/login" method="post">
 						 <h5>User Name:</h5>	
-						 <input type="text" value="">
+						 <input type="text" id="username" name="username" class="form-control" placeholder="Username" autofocus>
 						 <h5>Password:</h5>
-						 <input type="password" value="">					
+						 <input type="password" id="password" name="password" class="form-control" placeholder="Password">	
+						 <input type="hidden" name="_csrf" value="{{ csrfToken }}">				
 						 <input type="submit" value="Login">
 						  
 					 </form>
