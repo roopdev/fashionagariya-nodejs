@@ -1,24 +1,47 @@
+<!-- User Profile Page -->
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
-		<h1>User Profile</h1>
+<h2 class="text-center">{{ user.firstName }} Profile Information</h2>
 		<hr>
-		<h2>My Orders</h2>
-		{{# each orders }} 
+	<div class="col-md-8 col-md-offset-2">		
 		<div class="panel panel-default">
+		<div class="panel-heading">{{user.username}}</div>
 		  <div class="panel-body">
 			<ul class="list-group">
-			{{# each this.items }} 
 				<li class="list-group-item">
-		    		<span class="badge">{{ this.price }}</span>
-		    		{{ this.item.title }} | {{ this.qty }} Units
+				<label>Username: {{ user.username }}</label>
 		  		</li>
-			{{/ each}}		  		
+				<li class="list-group-item">
+				<label>First Name: {{ user.firstName }}</label>
+				</li>
+				<li class="list-group-item">
+				<label>Last Name: {{ user.lastName }}</label>
+				</li>
+				<li class="list-group-item">
+				<label>Gender: {{ user.gender }}</label>
+		  		</li>
+				<li class="list-group-item">
+				<label>Email Id: {{ user.email }}</label>
+				</li>
+				<li class="list-group-item">
+				<label>Mobile Number: {{ user.number }}</label>
+				</li>
+				<li class="list-group-item">
+				<label>Password: {{ user.password }}</label>
+				</li>			  		
 			</ul>
 		  </div>
-		  <div class="panel-footer">
-		  	<strong>Total Price: $ {{ this.cart.totalPrice }}</strong>
-		  </div>
+		</div>	
+	</div>
+	<div class="col-md-4 col-md-offset-2">
+		<div>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<a href="#"><span class="label label-success">Update</span></a>
+					<a href="#"><span class="label label-success">Reset</span></a>
+				</li>
+				
+			</ul>
 		</div>
-		{{/ each }}		
 	</div>
 </div>
+<!-- //User Profile Page -->

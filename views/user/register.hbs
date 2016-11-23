@@ -3,42 +3,47 @@
 		<div class="container">
 			<div class="reg">
 				<h3>Register Now</h3>
+				<h4>Welcome, please enter the following details to continue.</h4>
+				<p>If you have previously registered with us, <a href="/user/login">click here</a></p>
 				{{#if hasErrors}}
 					<div class="alert alert-danger">
 						{{# each messages }}
 							<p>{{ this }}</p>
 						{{/each}}
 					</div>
-				{{/if}} <br>
-
-				<h4>Welcome, please enter the following details to continue.</h4>
-				<p>If you have previously registered with us, <a href="/user/login">click here</a></p>
-
+				{{/if}}
 				 <form action="/user/register" method="post">
 					<ul>
 						<li class="text-info">Username: </li>
-						<li><input type="text" id="username" name="username"  placeholder='Username' class="form-control"></li>
+						<li><input type="text" id="username" name="username" class="form-control" autofocus placeholder="minimum 4 characters"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Password: </li>
-						<li><input type="password" id="password" name="password" class="form-control" placeholder="password"></li>
-						<p>*minimum 6</p>
+						<li><input type="password" id="password" name="password" class="form-control" placeholder="minimum 6 characters"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Email: </li>
-						<li><input type="email" id="email" name="email" class="form-control" placeholder="Email"></li>
+						<li><input type="email" id="email" name="email" class="form-control"></li>
 					</ul>
 					<ul>
 						<li class="text-info">First Name: </li>
-						<li><input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name"></li>
+						<li><input type="text" id="firstName" name="firstName" class="form-control"></li>
 					 </ul>
 					<ul>
 						<li class="text-info">Last Name: </li>
-						<li><input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name"></li>
+						<li><input type="text" id="lastName" name="lastName" class="form-control"></li>
+					</ul>
+					<ul>
+						<li  class="text-info">Gender: </li>
+						<li><select type="text" class="form-control" id="gender" name="gender">
+						    	<option value="Male">Male</option>
+						    	<option value="Female">Female</option>
+						  	</select>
+						</li>						
 					</ul>				 
 					<ul>
 						<li class="text-info">Mobile Number:</li>
-						<li><input type="number" id="number" name="number" class="form-control"></li>
+						<li><input type="number" id="number" name="number" class="form-control" placeholder="10 digit number"></li>
 					</ul>
 					<input type="hidden" name="_csrf" value="{{ csrfToken }}">						
 					<input type="submit" value="Register Now">

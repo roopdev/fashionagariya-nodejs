@@ -10,6 +10,17 @@ var csrfProtection = csrf();
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
+	var user = req.user;
+		res.render('user/profile', { user: user});
+});
+
+router.get('/wishlist', isLoggedIn, function(req, res, next) {
+	var user = req.user;
+	res.render('user/wishlist', {user: user});
+});
+
+router.get('/order', isLoggedIn, function(req, res, next) {
+	var user = req.user;
 	Order.find({user: req.user}, function(err, orders) {
 		if (err) {
 			return res.write('No order list Yet! ');
@@ -19,7 +30,7 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 			cart = new Cart(order.cart);
 			order.items = cart.generateArray();
 		});
-		res.render('user/profile', {orders: orders });
+		res.render('user/order', {orders: orders, user: user});
 	});
 });
 

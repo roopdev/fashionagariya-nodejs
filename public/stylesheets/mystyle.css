@@ -23,3 +23,8 @@
 .carousel:hover .carousel-control {
   visibility: visible;
 }
+
+.list-group {
+  font-family: 'Monda', sans-serif;
+  color: black;
+}

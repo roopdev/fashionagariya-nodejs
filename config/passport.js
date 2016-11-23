@@ -23,10 +23,10 @@ passport.use('local.signup', new LocalStrategy({
 }, function(req, email, password, done) {
 	req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 	req.checkBody('password', 'Invalid password').notEmpty().isLength({min:6});
-	req.checkBody('username', 'Username should be more than 6').notEmpty().isLength({min:6});
-	req.checkBody('firstName', 'Invalid First Name').notEmpty().isLength({min:4,max:15});
-	req.checkBody('lastName', 'Invalid Last Name').notEmpty().isLength({min:4,max:15});
-	req.checkBody('number', 'Provide 10 digit number!').notEmpty().isInt().isLength({min:10});
+	req.checkBody('username', 'Username should be more than 6 letters').notEmpty().isLength({min:6});
+	req.checkBody('firstName', 'First Name should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
+	req.checkBody('lastName', 'Last Name should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
+	req.checkBody('number', 'Provide 10 digit number!').notEmpty().isInt().isLength({min:10,max:10});
 	var errors = req.validationErrors();
 	if (errors) {
 		var messages = [];
@@ -45,7 +45,7 @@ passport.use('local.signup', new LocalStrategy({
 			}
 			// User already exists
 			if (user) {
-				console.log('User already exists with username: '+email);
+				console.log('User already exists with email: '+email);
 				return done(null, false, {message: 'Email is already in use.'});
 			} else {
 				// if there is not user with the email
@@ -58,6 +58,7 @@ passport.use('local.signup', new LocalStrategy({
 				newUser.username = req.param('username');
 				newUser.firstName = req.param('firstName');
 				newUser.lastName = req.param('lastName');
+				newUser.gender = req.param('gender');
 				newUser.number = req.param('number');
 
 				// Save the new user
