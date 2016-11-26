@@ -15,7 +15,7 @@
 					 {{/if}}
 					 <form action="/user/login" method="post">
 						 <h5>Email:</h5>	
-						 <input type="email" id="email" name="email" class="form-control" placeholder="Email" autofocus>
+						 <input type="text" id="email" name="email" class="form-control" placeholder="Email" autofocus><br>
 						 <h5>Password:</h5>
 						 <input type="password" id="password" name="password" class="form-control" placeholder="Password">	
 						 <input type="hidden" name="_csrf" value="{{ csrfToken }}">				

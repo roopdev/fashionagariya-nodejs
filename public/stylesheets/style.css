@@ -169,7 +169,7 @@ select.item_Size {
 	font-size: 1em;
 	color: #000;
 	line-height: 1.8em;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	margin-bottom: 4%;
 }
 .h_nav h4.top{
@@ -195,7 +195,7 @@ select.item_Size {
 	text-decoration:underline;
 }
 .mega_nav {
-  background-color: #f5f5f5;
+  background-color: #f65a5b;
   box-shadow: 0px 6px 5px #CCCBCB;
 }
 .search {
@@ -217,6 +217,7 @@ select.item_Size {
   position: relative;
   font-size: 0.9em;
   -webkit-appearance: none;
+  -moz-appearance: none;
 }
 ::-webkit-input-placeholder{
 	color: #000 !important;
@@ -2255,7 +2256,7 @@ label.radio {
 	  min-height: 300px;
 	}
 	.welcome:before {
-		background: url(../images/5.png) no-repeat -36px 40px;
+		background: url() no-repeat -36px 40px;
 	}
 	.wel a {
 	  width: 32%;
@@ -2356,12 +2357,12 @@ label.radio {
 		width: 50% !important;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -36px 40px;
+	  background: url() no-repeat -36px 40px;
 	  background-size: 145%;
 	  width: 280px;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat 0px 0px;
+	  background: url() no-repeat 0px 0px;
 	  width: 360px;
 	  background-size: 100%;
 	}
@@ -2460,12 +2461,12 @@ label.radio {
 	  min-height: 311px;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -36px 40px;
+	  background: url() no-repeat -36px 40px;
 	  background-size: 158%;
 	  width: 200px;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat -15px 0px;
+	  background: url() no-repeat -15px 0px;
 	  width: 230px;
 	  background-size: 120%;
 	}
@@ -2617,7 +2618,7 @@ label.radio {
 	  width: 60%;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -35px 40px;
+	  background: url() no-repeat -35px 40px;
 	  background-size: 158%;
 	  width: 125px;
 	}
@@ -2625,7 +2626,7 @@ label.radio {
 	  width: 100%;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat -15px 0px;
+	  background: url() no-repeat -15px 0px;
 	  width: 160px;
 	  background-size: 120%;
 	}
@@ -2832,12 +2833,12 @@ label.radio {
 	  min-height: 250px;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -20px 40px;
+	  background: url() no-repeat -20px 40px;
 	  background-size: 150%;
 	  width: 100px;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat -9px 0px;
+	  background: url() no-repeat -9px 0px;
 	  width: 100px;
 	  background-size: 120%;
 	}
