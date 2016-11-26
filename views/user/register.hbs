@@ -13,17 +13,17 @@
 					</div>
 				{{/if}}
 				 <form action="/user/register" method="post">
-					<ul>
-						<li class="text-info">Username: </li>
-						<li><input type="text" id="username" name="username" class="form-control" autofocus placeholder="minimum 4 characters"></li>
+				 	<ul>
+						<li class="text-info">Email: </li>
+						<li><input type="email" id="email-reg" name="email" autofocus class="form-control"></li>
 					</ul>
 					<ul>
 						<li class="text-info">Password: </li>
-						<li><input type="password" id="password" name="password" class="form-control" placeholder="minimum 6 characters"></li>
+						<li><input type="password" id="pw-reg" name="password" class="form-control" placeholder="minimum 6 characters"></li>
 					</ul>
 					<ul>
-						<li class="text-info">Email: </li>
-						<li><input type="email" id="email" name="email" class="form-control"></li>
+						<li class="text-info">Confirm Password: </li>
+						<li><input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="retype same password"></li>
 					</ul>
 					<ul>
 						<li class="text-info">First Name: </li>
@@ -46,7 +46,8 @@
 						<li><input type="number" id="number" name="number" class="form-control" placeholder="10 digit number"></li>
 					</ul>
 					<input type="hidden" name="_csrf" value="{{ csrfToken }}">						
-					<input type="submit" value="Register Now">
+					<input type="submit" id="register" value="Register Now">
+
 					<p class="click">By clicking this button, you agree to our  <a href="/user/login">Policy Terms and Conditions.</a></p> 
 				</form>
 				<p class="click text-center">If you unable to view the verification mail or the link is expired,  <a href="/user/resend">Click here to Resend the mail!</a></p>

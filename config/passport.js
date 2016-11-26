@@ -1,16 +1,22 @@
 var passport = require('passport');
-var User = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 var LocalStrategy = require('passport-local').Strategy;
+require('dotenv').config();
+var helper = require('sendgrid').mail;
+var handlebars = require('handlebars');
+var fs = require('fs');
+
+var User = require('../models/user');
+
+var template = fs.readFileSync('./views/email.hbs', 'utf-8');
+var compiledTemplate = handlebars.compile(template);
 
 passport.serializeUser(function (user, done) {
-	console.log('Serializing user: ');console.log(user);
-	done(null, user._id);
+	done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
 	User.findById(id, function(err, user) {
-		console.log('deserialize user: ', user);
 		done(err, user);
 	});
 });
@@ -22,11 +28,10 @@ passport.use('local.signup', new LocalStrategy({
 	passReqToCallback: true
 }, function(req, email, password, done) {
 	req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-	req.checkBody('password', 'Invalid password').notEmpty().isLength({min:6});
-	req.checkBody('username', 'Username should be more than 6 letters').notEmpty().isLength({min:6});
+	req.checkBody('password', 'Password is short/Confirm password did not match').notEmpty().isLength({min: 6}).equals(req.body.confirmPassword);
 	req.checkBody('firstName', 'First Name should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
 	req.checkBody('lastName', 'Last Name should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
-	req.checkBody('number', 'Provide 10 digit number!').notEmpty().isInt().isLength({min:10,max:10});
+	req.checkBody('number', 'Provide 10 digit number!').notEmpty().isMobilePhone('en-IN');
 	var errors = req.validationErrors();
 	if (errors) {
 		var messages = [];
@@ -40,7 +45,7 @@ passport.use('local.signup', new LocalStrategy({
 		User.findOne({'email': email }, function(err, user) {
 			// In case of any error, return using the done method
 			if (err) {
-				console.log('Error in SignUp: ' +err);
+				console.log('Error in Registration: ' +err);
 				return done(err);
 			}
 			// User already exists
@@ -55,11 +60,34 @@ passport.use('local.signup', new LocalStrategy({
 				// set the user's local credentials
 				newUser.email = email;
 				newUser.password = createHash(password);
-				newUser.username = req.param('username');
-				newUser.firstName = req.param('firstName');
-				newUser.lastName = req.param('lastName');
-				newUser.gender = req.param('gender');
-				newUser.number = req.param('number');
+				newUser.username = req.body.username;
+				newUser.firstName = req.body.firstName;
+				newUser.lastName = req.body.lastName;
+				newUser.gender = req.body.gender;
+				newUser.number = req.body.number;
+
+				// send welcome mail after registration
+				var from_email = new helper.Email('noreply@fashionagariya.com');
+				var to_email = new helper.Email(newUser.email);
+				var subject = 'Welcome mail from Fashionagariya';
+				var content = new helper.Content('text/html', compiledTemplate({firstName: newUser.firstName}));
+				var mail = new helper.Mail(from_email, subject, to_email, content);
+				 
+				var sg = require('sendgrid')(process.env.KEY);
+				var request = sg.emptyRequest({
+				  method: 'POST',
+				  path: '/v3/mail/send',
+				  body: mail.toJSON(),
+				});
+				 
+				sg.API(request, function(error, response) {
+					if(error) {
+						console.log('Error response received');
+					}
+				  console.log(response.statusCode);
+				  console.log(response.body);
+				  console.log(response.headers);
+				});
 
 				// Save the new user
 				newUser.save(function(err) {
@@ -80,9 +108,11 @@ passport.use('local.signup', new LocalStrategy({
 );
 
 passport.use('local.signin', new LocalStrategy({
+	usernameField: 'email',
+	passwordField: 'password',
 	passReqToCallback: true
-}, function(req, username, password, done) {
-	req.checkBody('username', 'User not Found').notEmpty();
+}, function(req, email, password, done) {
+	req.checkBody('email', 'User not Found').notEmpty().isEmail();
 	req.checkBody('password', 'Invalid password').notEmpty();
 	var errors = req.validationErrors();
 	if (errors) {
@@ -93,14 +123,14 @@ passport.use('local.signin', new LocalStrategy({
 		return done(null, false, req.flash('error', messages));
 	}
 	// Check in mongo if a user with username exists or not
-	User.findOne({'username': username}, function(err, user) {
+	User.findOne({'email': email}, function(err, user) {
 		// In case of any error, return using the done method
 		if (err) {
 			return done(err);
 		}
 		// Username does not exist, log the error and redirect back
 		if (!user) {
-			console.log('User Not Found with username ' + username);
+			console.log('User Not Found with email ' + email);
 			return done(null, false, {message: 'User Not found.'});
 		}
 		// User exists but wrong password, log the error

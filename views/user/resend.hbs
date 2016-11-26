@@ -7,10 +7,31 @@
 				 <form>				 
 					<ul>
 						<li class="text-info">Email: </li>
-						<li><input type="text" value=""></li>
+						<li><input type="text" id="email-resend" placeholder="Provide email while Registration"></li>
 					</ul>						
-					<input type="submit" value="Resend"> 
+					<input type="submit" value="Resend" id="resend">
+					<span id="msg-resend"></span>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		$('document').ready(function(){
+        $('#resend').click(function(){
+          var email = $("#email-resend").val();
+          $.ajax({
+            url: '/',
+            type: 'POST',
+            data: {email: email, type: 'resend'}
+          }).then(function(data) {
+            $("#msg-resend").text(data.msg);
+          });
+        });
+        $('#email-resend').keypress(function(e){
+          if(e.which == 13){//Enter key pressed
+              $('#resend').click();//Trigger search button click event
+          }
+        });
+      });
+	</script>

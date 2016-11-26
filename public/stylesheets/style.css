@@ -27,13 +27,15 @@ body a:hover{
 	font-size: 2em;
 	color:#04007a;
 	text-decoration: none;
-	background: url(../images/1.png) no-repeat 0px 0px;
-	display: block;
-	height: 50px;
+	background: url() no-repeat 0px 0px;
+	display: inline-block;
+	height: 100%;
 	padding-left: 1.8em;
 }
 .logo a:hover{
 	text-decoration:none;
+	background: url(../images/logo2.png) no-repeat 60px 0px;
+	height: 100%;
 	color:#ff6600;
 }
 .top_left{
@@ -2757,7 +2759,7 @@ label.radio {
 	  font-size: 14px;
 	}
 	.logo a {
-	  background: url(../images/1.png) no-repeat 0px 0px;
+	  background: url() no-repeat 0px 0px;
 	  background-size: 18%;
 	  font-size: 1.5em;
 	}
@@ -2948,7 +2950,7 @@ label.radio {
 	  text-align: center;
 	}
 	.logo a {
-	  background: url(../images/1.png) no-repeat 60px 0px;
+	  background: url() no-repeat 60px 0px;
 	  background-size: 13%;
 	}
 	.header_top {
@@ -2964,7 +2966,7 @@ label.radio {
 }
 @media (max-width: 320px){
 	.logo a {
-	  background: url(../images/1.png) no-repeat 36px 0px;
+	  background: url() no-repeat 36px 0px;
 	  background-size: 13%;
 	}
 	.box_1 {
@@ -3270,7 +3272,7 @@ label.radio {
 	.logo a {
 		height: 37px;
 		font-size: 1.3em;
-		background: url(../images/1.png) no-repeat 47px 2px;
+		background: url() no-repeat 47px 2px;
 		background-size: 11%;
 	}
 }
