@@ -70,6 +70,14 @@ router.post('/resend', function(req, res, next) {
 	// Fill in the function to resend verification mail
 });
 
+router.get('/forgotPassword', function(req, res, next) {
+	res.render('user/forgotPassword');
+});
+
+router.post('/forgotPassword', function(req, res, next) {
+	// Fill in the function to reset password for the email id
+});
+
 router.get('/login', function(req, res, next) {
 	var messages = req.flash('error');
 	res.render('user/login', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
