@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 var schema = new Schema({
 	imagePath: {type: String, required: true},
 	title: {type: String, required: true},
-	description: {type: String, required: true},
-	price: {type: Number, required: true},
-	uploadDate: {type: Date, default: Date.now}
+	author: {type: String, required: true},
+	content: {type: String, required: true},
+	createdAt: {type: Date,default: Date.now}
 });
 
-module.exports = mongoose.model('Product', schema);
+module.exports = mongoose.model('Blog', schema);

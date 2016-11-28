@@ -8,6 +8,7 @@ var userSchema = new Schema({
 	lastName: {type: String, required: true},
 	gender: {type: String, required: true},
 	number: {type: Number, required: true},
+	GENERATED_VERIFYING_URL: {type: String, required: true},
 	createdAt: {type: Date,default: Date.now}
 });
 

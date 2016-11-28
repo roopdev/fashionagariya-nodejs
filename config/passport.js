@@ -5,6 +5,7 @@ require('dotenv').config();
 var helper = require('sendgrid').mail;
 var handlebars = require('handlebars');
 var fs = require('fs');
+var randtoken = require('rand-token');
 
 var User = require('../models/user');
 
@@ -53,6 +54,11 @@ passport.use('local.signup', new LocalStrategy({
 				console.log('User already exists with email: '+email);
 				return done(null, false, {message: 'Email is already in use.'});
 			} else {
+
+				//Generate an random token for URL
+				var URLLength= 48;
+				var URL= randtoken.generate(URLLength);
+
 				// if there is not user with the email
 				// create the user
 				var newUser = new User();
@@ -65,12 +71,13 @@ passport.use('local.signup', new LocalStrategy({
 				newUser.lastName = req.body.lastName;
 				newUser.gender = req.body.gender;
 				newUser.number = req.body.number;
+				newUser.GENERATED_VERIFYING_URL = URL;
 
-				// send welcome mail after registration
+				// send verificatoin email with verification link  after registration
 				var from_email = new helper.Email('noreply@fashionagariya.com');
 				var to_email = new helper.Email(newUser.email);
-				var subject = 'Welcome mail from Fashionagariya';
-				var content = new helper.Content('text/html', compiledTemplate({firstName: newUser.firstName}));
+				var subject = 'Fashionagariya: Please confirm your Registration!';
+				var content = new helper.Content('text/html', compiledTemplate({firstName: newUser.firstName, link: 'https://fashionnagariya.herokuapp.com/user/email-verification/'+URL}));
 				var mail = new helper.Mail(from_email, subject, to_email, content);
 				 
 				var sg = require('sendgrid')(process.env.KEY);

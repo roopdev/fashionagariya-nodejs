@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
+var helper = require('sendgrid').mail;
 
 var Order = require('../models/order');
 var Cart = require('../models/cart');
@@ -52,7 +53,7 @@ router.get('/register', function(req, res, next) {
 router.post('/register', passport.authenticate('local.signup', {
 	failureRedirect: '/user/register',
 	failureFlash: true
-}),function (req, res, next) {
+	}),function (req, res, next) {
 	if (req.session.oldUrl) {
 		var oldUrl = req.session.oldUrl;
 		req.session.oldUrl = null;
@@ -60,7 +61,45 @@ router.post('/register', passport.authenticate('local.signup', {
 	} else {
 		res.redirect('/user/profile');
 		}
+});
+
+// user accesses the link that is sent 
+router.get('/email-verification/:URL', function(req, res, next) {
+	var url = req.params.URL;
+
+	User.findOne({'GENERATED_VERIFYING_URL': url}, function(err, user) {
+			if(user) {
+				console.log(user);
+				res.render('user/confirm',{firstName: user.firstName, email: user.email});
+				// send confirmation email 
+				var from_email = new helper.Email('noreply@fashionagariya.com');
+				var to_email = new helper.Email(user.email);
+				var subject = 'Fashionagariya: Verification successful!';
+				var content = new helper.Content('text/plain','Thank You !!');
+				var mail = new helper.Mail(from_email, subject, to_email, content);
+				 
+				var sg = require('sendgrid')(process.env.KEY);
+				var request = sg.emptyRequest({
+				  method: 'POST',
+				  path: '/v3/mail/send',
+				  body: mail.toJSON(),
+				});
+				 
+				sg.API(request, function(error, response) {
+					if(error) {
+						console.log('Error response received');
+					}
+				  console.log(response.statusCode);
+				  console.log(response.body);
+				  console.log(response.headers);
+				});
+			} else {
+				console.log('The URL didnt match with the user');
+				return res.status(404).send('Please Resend verification email to confrim email address again or Register with a valid email id.');
+			}			
 	});
+
+});
 
 router.get('/resend', function(req, res, next) {
 	res.render('user/resend');
