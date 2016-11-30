@@ -7,31 +7,30 @@ var handlebars = require('handlebars');
 var fs = require('fs');
 var randtoken = require('rand-token');
 
-var User = require('../models/user');
+var apiUser = require('../models/apiuser');
 
-var template = fs.readFileSync('./views/email.hbs', 'utf-8');
+var template = fs.readFileSync('./views/apiemail.hbs', 'utf-8');
 var compiledTemplate = handlebars.compile(template);
 
-passport.serializeUser(function (user, done) {
-	done(null, user.id);
+passport.serializeUser(function (apiuser, done) {
+	done(null, apiuser.id);
 });
 
 passport.deserializeUser(function (id, done) {
-	User.findById(id, function(err, user) {
-		done(err, user);
+	User.findById(id, function(err, apiuser) {
+		done(err, apiuser);
 	});
 });
 
 //passport for the signup strategy 
-passport.use('local.signup', new LocalStrategy({
+passport.use('local.apisignup', new LocalStrategy({
 	usernameField: 'email',
 	passwordField: 'password',
 	passReqToCallback: true
 }, function(req, email, password, done) {
 	req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-	req.checkBody('password', 'Password is short/Confirm password did not match').notEmpty().isLength({min: 6}).equals(req.body.confirmPassword);
-	req.checkBody('firstName', 'First Name should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
-	req.checkBody('lastName', 'Last Name should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
+	req.checkBody('password', 'Password is short').notEmpty().isLength({min: 6});
+	req.checkBody('username', 'Username should be longer than 4 letters').notEmpty().isLength({min:4,max:15});
 	req.checkBody('number', 'Provide 10 digit number!').notEmpty().isMobilePhone('en-IN');
 	var errors = req.validationErrors();
 	if (errors) {
@@ -43,7 +42,7 @@ passport.use('local.signup', new LocalStrategy({
 	}
 	findOrCreateUser = function() {
 		// find a user in Mongo with provided email
-		User.findOne({'email': email }, function(err, user) {
+		apiUser.findOne({'email': email }, function(err, user) {
 			// In case of any error, return using the done method
 			if (err) {
 				console.log('Error in Registration: ' +err);
@@ -51,7 +50,7 @@ passport.use('local.signup', new LocalStrategy({
 			}
 			// User already exists
 			if (user) {
-				console.log('User already exists with email: '+email);
+				console.log('apiUser already exists with email: '+email);
 				return done(null, false, {message: 'Email is already in use.'});
 			} else {
 
@@ -61,22 +60,20 @@ passport.use('local.signup', new LocalStrategy({
 
 				// if there is not user with the email
 				// create the user
-				var newUser = new User();
+				var newapiUser = new apiUser();
 
 				// set the user's local credentials
-				newUser.email = email;
-				newUser.password = createHash(password);
-				newUser.firstName = req.body.firstName;
-				newUser.lastName = req.body.lastName;
-				newUser.gender = req.body.gender;
-				newUser.number = req.body.number;
-				newUser.GENERATED_VERIFYING_URL = URL;
+				newapiUser.email = email;
+				newapiUser.password = createHash(password);
+				newapiUser.username = req.body.username;
+				newapiUser.number = req.body.number;
+				newapiUser.GENERATED_VERIFYING_URL = URL;
 
 				// send verificatoin email with verification link  after registration
-				var from_email = new helper.Email('noreply@fashionagariya.com');
-				var to_email = new helper.Email(newUser.email);
-				var subject = 'Fashionagariya: Please confirm your Registration!';
-				var content = new helper.Content('text/html', compiledTemplate({firstName: newUser.firstName, link: 'http://localhost:3000/user/email-verification/'+URL}));
+				var from_email = new helper.Email('admin@fashionagariya.com');
+				var to_email = new helper.Email(newapiUser.email);
+				var subject = 'Admin Fashionagariya: Please confirm your Registration!';
+				var content = new helper.Content('text/plain', 'The verification link for api will be provided in future!!!');
 				var mail = new helper.Mail(from_email, subject, to_email, content);
 				 
 				var sg = require('sendgrid')(process.env.KEY);
@@ -95,14 +92,14 @@ passport.use('local.signup', new LocalStrategy({
 				  console.log(response.headers);
 				});
 
-				// Save the new user
-				newUser.save(function(err) {
+				// Save the new api user
+				newapiUser.save(function(err) {
 					if (err) {
-						console.log('Error in Saving user: '+err);
+						console.log('Error in Saving apiuser: '+err);
 						throw err;
 					}
-					console.log('User Registration succesful!');
-					return done(null, newUser);
+					console.log('apiUser Registration succesful!');
+					return done(null, newapiUser);
 				});
 		 	}
 		});
@@ -113,12 +110,12 @@ passport.use('local.signup', new LocalStrategy({
 	})
 );
 
-passport.use('local.signin', new LocalStrategy({
-	usernameField: 'email',
+passport.use('local.apisignin', new LocalStrategy({
+	usernameField: 'username',
 	passwordField: 'password',
 	passReqToCallback: true
-}, function(req, email, password, done) {
-	req.checkBody('email', 'User not Found').notEmpty().isEmail();
+}, function(req, username, password, done) {
+	req.checkBody('username', 'User not Found').notEmpty();
 	req.checkBody('password', 'Invalid password').notEmpty();
 	var errors = req.validationErrors();
 	if (errors) {
@@ -129,24 +126,24 @@ passport.use('local.signin', new LocalStrategy({
 		return done(null, false, req.flash('error', messages));
 	}
 	// Check in mongo if a user with username exists or not
-	User.findOne({'email': email}, function(err, user) {
+	apiUser.findOne({'username': username}, function(err, apiuser) {
 		// In case of any error, return using the done method
 		if (err) {
 			return done(err);
 		}
 		// Username does not exist, log the error and redirect back
-		if (!user) {
-			console.log('User Not Found with email ' + email);
-			return done(null, false, {message: 'User Not found.'});
+		if (!apiuser) {
+			console.log('User Not Found with username ' + username);
+			return done(null, false, {message: 'apiUser Not found.'});
 		}
 		// User exists but wrong password, log the error
-		if(!isValidPassword(user, password)) {
+		if(!isValidPassword(apiuser, password)) {
 			console.log('Invalid Password');
 			return done(null, false, {message: 'Wrong password.'}); // redirect back to login page
 		}
 		// User and password both match, return user from done method
 		// which will be treated like success
-		return done(null, user);
+		return done(null, apiuser);
 	});
 }));
 
@@ -155,6 +152,6 @@ var createHash = function(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
 };
 // Compares  hash password using bcrypt
-var isValidPassword = function(user, password) {
-	return bcrypt.compareSync(password, user.password);
+var isValidPassword = function(apiuser, password) {
+	return bcrypt.compareSync(password, apiuser.password);
 };

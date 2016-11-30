@@ -1,153 +1,33 @@
 <!-- products -->
 	<div class="products">
 		<div class="container">
+		
 			<div class="products-grids">
+
+				{{# each products }}
 				<div class="col-md-8 products-grid-left">
-					<div class="products-grid-lft">
-						<div class="products-grd">
+					{{# each this }}
+					<div class="products-grid-lft">					
+						<div class="products-grd">						
 							<div class="p-one simpleCart_shelfItem prd">
-								<a href="single.html">
-										<img src="images/11.jpg" alt="" class="img-responsive" />
+								<a href="/single/{{this.id}}">
+										<img src="{{this.imagePath}}" alt="" class="img-responsive" />
 										<div class="mask">
 											<span>Quick View</span>
 										</div>
 								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
+								<h4>{{ this.title }}</h4>
+								<p><a class="item_add" href="/add-to-cart/{{this._id}}"><i></i> <span class=" item_price valsa">${{ this.price }}</span></a></p>
 								<div class="pro-grd">
-									<a href="/single">10% Off</a>
+									<a href="/single/{{this.id}}">10% Off</a>
 								</div>
-							</div>	
-						</div>
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="/single">
-										<img src="images/10.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="/single">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="/single">
-										<img src="images/9.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="/single">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="clearfix"> </div>
+							</div>						
+						</div>						
 					</div>
-					<div class="products-grid-lft">
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="/single">
-										<img src="images/1.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="/single">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="single.html">
-										<img src="images/9.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="single.html">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="single.html">
-										<img src="images/3.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="single.html">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-					<div class="products-grid-lft">
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="single.html">
-										<img src="images/2.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="single.html">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="single.html">
-										<img src="images/1.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="single.html">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="products-grd">
-							<div class="p-one simpleCart_shelfItem prd">
-								<a href="single.html">
-										<img src="images/4.jpg" alt="" class="img-responsive" />
-										<div class="mask">
-											<span>Quick View</span>
-										</div>
-								</a>
-								<h4>Aenean placerat</h4>
-								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">$729</span></a></p>
-								<div class="pro-grd">
-									<a href="single.html">10% Off</a>
-								</div>
-							</div>	
-						</div>
-						<div class="clearfix"> </div>
-					</div>
+					{{/each}}						
 				</div>
+				{{/each}}
+
 				<div class="col-md-4 products-grid-right">
 					<div class="w_sidebar">
 						<div class="w_nav1">
@@ -207,7 +87,9 @@
 					</div>
 				</div>
 				<div class="clearfix"></div>
+			
 			</div>
+		
 		</div>
 	</div>
 <!-- //products -->

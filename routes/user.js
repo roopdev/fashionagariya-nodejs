@@ -3,14 +3,25 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var helper = require('sendgrid').mail;
+var handlebars = require('handlebars');
+var fs = require('fs');
 
+//------------- All the mongoose models are required here ----------------------------------------------------------
 var Order = require('../models/order');
 var Cart = require('../models/cart');
 var User = require('../models/user');
+var Contact = require('../models/contact');
 
+//------------------ Csurf protections to all the routes with csrf.token ---------------------------------------------
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
+//------------------- formatting the email from handlebars to template -----------------------------------
+var template = fs.readFileSync('./views/apiemail.hbs', 'utf-8');
+var compiledTemplate = handlebars.compile(template);
+
+
+//------------------------- All the routing starts from here -----------------------------------------------------------
 router.get('/profile', isLoggedIn, function(req, res, next) {
 	var user = req.user;
 		res.render('user/profile', { user: user});
@@ -71,6 +82,7 @@ router.get('/email-verification/:URL', function(req, res, next) {
 			if(user) {
 				console.log(user);
 				res.render('user/confirm',{firstName: user.firstName, email: user.email});
+				//user.GENERATED_VERIFYING_URL = null;
 				// send confirmation email 
 				var from_email = new helper.Email('noreply@fashionagariya.com');
 				var to_email = new helper.Email(user.email);
@@ -136,13 +148,78 @@ router.post('/login', passport.authenticate('local.signin', {
 });
 
 router.get('/contact', function(req, res, next) {
-	res.render('user/contact');
+	var messages = req.flash('error');
+	res.render('user/contact', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
 });
 
 router.post('/contact', function(req, res, next) {
 	// Add the function to send the input contact 
-	// Response should be an success message on same page
+	// Response should be an success message on same page (rendering to new page for more personalization)
 	// Respond with thank you mail to the recipient. 
+	var info = {
+		firstName: req.body.firstName,
+		email: req.body.email,
+		number: req.body.number,
+		message: req.body.message
+	};
+	var contact = new Contact(info);
+
+	contact.save(function(err, contact) {
+		if(err) {
+			console.log('Error in Saving');
+			throw err;
+		}
+		else {
+			var firstName, email;
+			console.log(contact);
+			res.render('user/thankyou',{firstName: contact.firstName, email: contact.email});
+
+			// send thank you email to the contact person email-id
+				var from_email = new helper.Email('support@fashionagariya.com');
+				var to_email = new helper.Email(contact.email);
+				var subject = 'Fashionagariya: Thank you for contacting us!!';
+				var content = new helper.Content('text/plain', 'Hello , Thank you!!, We will respond your query to this email earliest.');
+				var mail = new helper.Mail(from_email, subject, to_email, content);
+				 
+				var sg = require('sendgrid')(process.env.KEY);
+				var request = sg.emptyRequest({
+				  method: 'POST',
+				  path: '/v3/mail/send',
+				  body: mail.toJSON(),
+				});
+				 
+				sg.API(request, function(error, response) {
+					if(error) {
+						console.log('Error response received');
+					}
+				  console.log(response.statusCode);
+				  console.log(response.body);
+				  console.log(response.headers);
+				});
+		}
+	});
+				// send detailed contact form email to the admin
+				var from_email = new helper.Email('info@fashionagariya.com');
+				var to_email = new helper.Email('rooptestdev@gmail.com');
+				var subject = 'Fashionagariya: You recieved a new contact form!!';
+				var content = new helper.Content('text/html', compiledTemplate({firstName: contact.firstName, email: contact.email, number: contact.number, message: contact.message}));
+				var mail = new helper.Mail(from_email, subject, to_email, content);
+				 
+				var sg = require('sendgrid')(process.env.KEY);
+				var request = sg.emptyRequest({
+				  method: 'POST',
+				  path: '/v3/mail/send',
+				  body: mail.toJSON(),
+				});
+				 
+				sg.API(request, function(error, response) {
+					if(error) {
+						console.log('Error response received');
+					}
+				  console.log(response.statusCode);
+				  console.log(response.body);
+				  console.log(response.headers);
+				});
 });
 
 module.exports = router;

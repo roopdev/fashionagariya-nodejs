@@ -10,14 +10,23 @@
 					<li>Fax :+1 078 4589 2456</li>
 					<li><a href="mailto:contact@fashionagariya.com">contact@fashionagariya.com</a></li>
 				</ul>
+				<div class="iconsocial">
+					<ul>
+						<li><a href="#"><i class="fa fa-lg fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-lg fa-google-plus"></i></a></li>
+						<li><a href="#"><i class="fa fa-lg fa-instagram"></i></a></li>
+						<li><a href="#"><i class="fa fa-lg fa-youtube"></i></a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="col-md-8 contact-left">
 				<h3>Contact Form</h3>
-				<form>
-					<input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
-					<input type="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
-					<input type="text" value="Mobile" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Mobile';}" required="">
-					<textarea type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
+				<form accept="/user/contact" method="post" id="insert-form">
+					<input type="text" placeholder="Name" required id="firstName" name="firstName">
+					<input type="email" placeholder="Email" required id="email" name="email">
+					<input type="text" placeholder="Mobile(option)" id="number" name="number">
+					<textarea type="text"  placeholder="Message...." required id="message" name="message"></textarea>
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
 					<input type="submit" value="Submit" >
 				</form>
 			</div>

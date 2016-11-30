@@ -28,6 +28,7 @@ var app = express();
 //mongodb connection
 mongoose.connect(process.env.CONNECT);
 require('./config/passport');
+require('./config/apipassport');
 
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
@@ -54,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.locals.login = req.isAuthenticated();
+  res.locals.apilogin = req.isAuthenticated();
   res.locals.session = req.session;
   next();
 });

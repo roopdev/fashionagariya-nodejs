@@ -723,7 +723,7 @@ background: url(../images/3.png) no-repeat -66px 0px;
 }
 .welcome {
   display: flex;
-  background-image: url("/images/blank.gif");
+  background-image: url("https://static.pexels.com/photos/230755/pexels-photo-230755.jpeg");
 }
 .welcome-info h3{
 	color:#204056;
@@ -1186,7 +1186,7 @@ li.last_price span {
 /*--//checkout--*/
 /*-- products --*/
 .products-grids{
-	padding:5em 0 0;
+	padding:1em 0 0;
 }
 .products-grd{
 	float:left;
@@ -2238,8 +2238,6 @@ select.arrival option {
 }
 label.radio {
   color: #204056;
-  font-weight: 300;
-  cursor: pointer;
   font-size: 1em;
 }
 .col-rad {
