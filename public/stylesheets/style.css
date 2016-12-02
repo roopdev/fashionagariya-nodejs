@@ -723,7 +723,7 @@ background: url(../images/3.png) no-repeat -66px 0px;
 }
 .welcome {
   display: flex;
-  background-image: url("https://static.pexels.com/photos/230755/pexels-photo-230755.jpeg");
+  background-image: url("../images/wel1.jpeg");
 }
 .welcome-info h3{
 	color:#204056;
