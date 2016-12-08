@@ -20,8 +20,8 @@
 								<div class="clearfix"></div>	
 							</ul><br>
 							<ul class="qty">
-								<li><a href="/reduce/{{this.item._id}}"><span class="glyphicon glyphicon-minus"></span></a></li>
-					   			<li><a href="/remove/{{this.item._id}}"><span class="glyphicon glyphicon-remove"></span></a></li>
+								<li><a href="/reduce/{{this.item._id}}" data-toggle="tooltip" data-placement="bottom" title="Reduce by one!"><span class="glyphicon glyphicon-minus"></span></a></li>
+					   			<li><a href="/remove/{{this.item._id}}" data-toggle="tooltip" data-placement="bottom" title="Remove the product!"><span class="glyphicon glyphicon-remove"></span></a></li>
 					   		</ul>
 							<div class="delivery">
 								 <p>Service Charges : Rs.100.00</p><br>
@@ -66,3 +66,10 @@
 </div>
 <!-- //Empty check-out -->
 {{/if}}
+
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
