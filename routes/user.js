@@ -34,6 +34,7 @@ router.get('/wishlist', isLoggedIn, function(req, res, next) {
 
 router.get('/order', isLoggedIn, function(req, res, next) {
 	var user = req.user;
+	var successMsg = req.flash('success')[0];
 	Order.find({user: req.user}, function(err, orders) {
 		if (err) {
 			return res.write('No order list Yet! ');
@@ -43,7 +44,7 @@ router.get('/order', isLoggedIn, function(req, res, next) {
 			cart = new Cart(order.cart);
 			order.items = cart.generateArray();
 		});
-		res.render('user/order', {orders: orders, user: user});
+		res.render('user/order', {orders: orders, user: user, successMsg: successMsg, noMessages: !successMsg});
 	});
 });
 
