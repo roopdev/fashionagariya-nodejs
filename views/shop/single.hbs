@@ -81,9 +81,11 @@
 					<div class="clearfix"> </div>
 				</div>
 				<p class="qty">Qty ::</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small">
+				<a class="item_add" href="/add-to-cart/{{product._id}}">
 				<div class="single-but item_add">
-					<input type="submit" value="add to cart">
+				<input type="submit" value="add to cart">	
 				</div>
+				</a>
 			</div>
 			<div class="flower-type">
 			<p>Model  ::<a href="#">{{ product.category}}</a></p>
