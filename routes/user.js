@@ -9,6 +9,7 @@ var fs = require('fs');
 //------------- All the mongoose models are required here ----------------------------------------------------------
 var Order = require('../models/order');
 var Cart = require('../models/cart');
+var UserCart = require('../models/userCart');
 var User = require('../models/user');
 var Contact = require('../models/contact');
 
@@ -49,8 +50,24 @@ router.get('/order', isLoggedIn, function(req, res, next) {
 });
 
 router.get('/logout', isLoggedIn, function(req, res, next) {
-	req.logout();
-	res.redirect('/');
+	if (req.session.cart) {
+		var cart = req.session.cart;
+		var userCart = new UserCart({
+	  		user: req.user,
+	  		cart: cart,
+	  	});
+	  	userCart.save(function(err, result) {
+	  		if(err) {
+	  			res.redirect('/');
+	  		}
+	  		req.session.cart = null;
+	  		req.logout();
+			res.redirect('/');	  		
+	  	});
+	} else {
+		req.logout();
+		res.redirect('/');
+	}
 });
 
 router.use('/', notLoggedIn, function(req, res, next) {
