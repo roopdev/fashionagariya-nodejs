@@ -138,7 +138,7 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
 	});
 });
 
-router.get('/add-to-wishlist/:id', function(req, res, next) {
+router.get('/add-to-wishlist/:id', isLoggedIn, function(req, res, next) {
 	var productId = req.params.id;
 	var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : {});
 
@@ -153,7 +153,7 @@ router.get('/add-to-wishlist/:id', function(req, res, next) {
 	});
 });
 
-router.get('/remove-wishlist/:id', function(req, res, next) {
+router.get('/remove-wishlist/:id', isLoggedIn, function(req, res, next) {
 	var productId = req.params.id;
 	var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : {});
 
