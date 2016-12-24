@@ -2,12 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 var Cart = require('../models/cart');
+var Wishlist = require('../models/wishlist');
+var UserCart = require('../models/userCart');
 var Product = require('../models/product');
 var Order = require('../models/order');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('shop/index', { title: 'FashionNagariya' });
+	var successMsg = req.flash('success')[0];
+	Product.find(function(err, docs){
+		var productChunks = [];
+		var chunkSize = 1;
+		for (var i = 0; i < docs.length; i += chunkSize) {
+			productChunks.push(docs.slice(i, i + chunkSize));
+		}
+		res.render('shop/index', { title: 'Fashionagariya', products: productChunks, successMsg: successMsg, noMessages: !successMsg });	
+	});
 });
 
 router.get('/about', function(req, res, next) {
@@ -33,7 +43,7 @@ router.get('/products', function(req, res, next) {
 		for (var i = 0; i < docs.length; i += chunkSize) {
 			productChunks.push(docs.slice(i, i + chunkSize));
 		}
-		res.render('shop/products', { title: 'Shopping Cart', products: productChunks, successMsg: successMsg, noMessages: !successMsg });	
+		res.render('shop/products', { title: 'Fashionagariya', products: productChunks, successMsg: successMsg, noMessages: !successMsg });	
 	});
 });
 
@@ -71,11 +81,13 @@ router.get('/remove/:id', function(req, res, next) {
 });
 
 router.get('/shopping-cart', function(req, res, next) {
+	var user = req.user;
+	//console.log(user);
 	if (!req.session.cart) {
-		return res.render('shop/shopping-cart', {products: null});
+		return res.render('shop/shopping-cart', {products: null, user: user});
 	}
 	var cart = new Cart(req.session.cart);
-	res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+	res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice, user: user});
 });
 
 router.get('/checkout', isLoggedIn, function(req, res, next) {
@@ -126,7 +138,40 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
 	});
 });
 
+router.get('/add-to-wishlist/:id', function(req, res, next) {
+	var productId = req.params.id;
+	var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : {});
 
+	Product.findById(productId, function(err, product) {
+		if (err) {
+			return res.redirect('/');
+		}
+		wishlist.add(product, product.id);
+		req.session.wishlist = wishlist;
+		console.log(req.session.wishlist);
+		res.redirect('/products');
+	});
+});
+
+router.get('/remove-wishlist/:id', function(req, res, next) {
+	var productId = req.params.id;
+	var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : {});
+
+	wishlist.removeItem(productId);
+	req.session.wishlist = wishlist;
+	res.redirect('/user/wishlist');
+});
+
+router.get('/usercart', function(req, res, next) {
+
+	UserCart.findById('5852d31f81f17e06a8c941e7', function(err, userCart) {
+		if(err) {
+			return res.status(404).res.json({message: 'Cart could not be found'});
+		}
+			console.log(userCart.user);
+			res.json({cart: userCart});
+	});
+});
 
 module.exports = router;
 

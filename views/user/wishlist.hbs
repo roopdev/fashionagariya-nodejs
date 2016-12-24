@@ -1,0 +1,51 @@
+<h1>All products in the wishlist of the user!</h1> <hr>
+{{# if products }} 
+<!-- //Wishlist -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-4">
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading text-center">{{user.firstName}} 's Wish List!</div>
+
+			  <!-- Table -->
+			  <table class="table table-striped">
+			   <thead>
+                <tr>
+                  <th>Remove</th>
+                  <th>Title</th>
+                  <th>Brand</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+              {{# each products }}
+                <tr>
+                  <td><a href="/remove-wishlist/{{this.item._id}}">Remove</a></td>
+                  <td><a href="/single/{{this.item._id}}">{{this.item.title}}</a></td>
+                  <td>{{this.item.brand}}</td>
+                  <td>{{this.item.category}}</td>
+                  <td>{{this.item.price}}</td>
+                </tr>
+              {{/each}}
+              </tbody>
+			  </table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Wishlist -->
+{{ else }}
+
+<!-- Empty wishlist -->
+<div class="container">
+  <div class="check">     
+    <div class="col-md-8 cart-items">
+    <h1>Hey, {{user.firstName}} {{user.lastName}}</h1>
+    <h4>Your wishlist is empty yet, select your favourites to add them here!</h4>
+    </div>
+  </div>
+</div>
+<!-- //Empty wishlist -->
+{{/if}}

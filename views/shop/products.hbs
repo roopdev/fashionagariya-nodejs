@@ -17,7 +17,11 @@
 										</div>
 								</a>
 								<h4>{{ this.title }}</h4>
-								<p><a class="item_add" href="/add-to-cart/{{this._id}}"><i></i> <span class=" item_price valsa">${{ this.price }}</span></a></p>
+								<p class="pull-left"><a class="item_add" href="/add-to-cart/{{this._id}}"><i></i> <span class=" item_price valsa">${{ this.price }}</span></a></p>
+								<div class="product-left-cart-r">
+									<a href="/add-to-wishlist/{{this._id}}"> </a>
+								</div>
+								<div class="clearfix"> </div>
 								<div class="pro-grd">
 									<a href="/single/{{this.id}}">10% Off</a>
 								</div>
@@ -27,6 +31,8 @@
 					{{/each}}						
 				</div>
 				{{/each}}
+
+
 
 				<div class="col-md-4 products-grid-right">
 					<div class="w_sidebar">

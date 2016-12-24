@@ -8,6 +8,7 @@ var fs = require('fs');
 var randtoken = require('rand-token');
 
 var User = require('../models/user');
+var UserCart = require('../models/userCart');
 
 var template = fs.readFileSync('./views/email.hbs', 'utf-8');
 var compiledTemplate = handlebars.compile(template);
@@ -146,6 +147,7 @@ passport.use('local.signin', new LocalStrategy({
 		}
 		// User and password both match, return user from done method
 		// which will be treated like success
+		
 		return done(null, user);
 	});
 }));

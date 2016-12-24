@@ -12,6 +12,7 @@ var Cart = require('../models/cart');
 var UserCart = require('../models/userCart');
 var User = require('../models/user');
 var Contact = require('../models/contact');
+var Wishlist = require('../models/wishlist');
 
 //------------------ Csurf protections to all the routes with csrf.token ---------------------------------------------
 var csrfProtection = csrf();
@@ -30,8 +31,14 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 
 router.get('/wishlist', isLoggedIn, function(req, res, next) {
 	var user = req.user;
-	res.render('user/wishlist', {user: user});
+	//console.log(user);
+	if (!req.session.wishlist) {
+		return res.render('user/wishlist', {products: null, user: user});
+	}
+	var wishlist = new Wishlist(req.session.wishlist);
+	res.render('user/wishlist', {products: wishlist.generateArray(), user: user});
 });
+
 
 router.get('/order', isLoggedIn, function(req, res, next) {
 	var user = req.user;
@@ -156,6 +163,18 @@ router.post('/login', passport.authenticate('local.signin', {
 	failureRedirect: '/user/login',
 	failureFlash: true
 }), function (req, res, next) {
+	//--------- How to retrieve the saved cart for the user ------------
+	// var user = req.user;
+	// console.log(user.id);
+	// UserCart.findOne({'userCart.user': user.id}, function(err, userCart) {
+	// 	if(err) {
+	// 		return res.status(404);
+	// 	}
+	// 		console.log(userCart.cart);
+	// 		var cart = new Cart(userCart.cart);
+	// 		req.session.cart = cart;
+	// 		console.log(cart);
+	// });
 	if (req.session.oldUrl) {
 		var oldUrl = req.session.oldUrl;
 		req.session.oldUrl = null;
@@ -164,6 +183,8 @@ router.post('/login', passport.authenticate('local.signin', {
 		res.redirect('/');
 		}
 });
+
+
 
 router.get('/contact', function(req, res, next) {
 	var messages = req.flash('error');

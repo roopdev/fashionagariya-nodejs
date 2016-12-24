@@ -8,19 +8,20 @@
 			<div class="top_right">
 				<ul>
 				{{# if login }} 
-					<li><a href="/user/order">Track Order</a></li>
+					<li><a href="/user/order"><i class="fa fa-truck" aria-hidden="true"></i> Track Order</a></li>
 				{{ else }} 
-					<li><a href="/user/contact">Contact</a></li>
+					<li><a href="/user/contact"><i class="fa fa-phone-square" aria-hidden="true"></i> Contact</a></li>
 				{{/if}}					
 				</ul>
 			</div>
 			<div class="top_left">
 				<ul>
-					<li class="top_link">Email:<a href="mailto:info@example.com">info@fashionagariya.com</a></li>|
+					<li class="top_link"><i class="fa fa-envelope" aria-hidden="true"></i> :<a href="mailto:info@example.com">info@fashionagariya.com</a></li>|
 					{{# if login }}
-					<li class="top_link"><a href="/user/logout">Logout</a></li> 
+					<li class="top_link"><a href="/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+					<li class="top_link"><a href="/user/wishlist"><i class="fa fa-star" aria-hidden="true"></i></a></li> 
 					{{ else }} 
-					<li class="top_link"><a href="/user/login">My Account</a></li>
+					<li class="top_link"><a href="/user/login"><i class="fa fa-user" aria-hidden="true"></i> My Account</a></li>
 					{{/ if }}				
 				</ul>
 			</div>
