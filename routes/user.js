@@ -14,12 +14,12 @@ var User = require('../models/user');
 var Contact = require('../models/contact');
 var Wishlist = require('../models/wishlist');
 
-//------------------ Csurf protections to all the routes with csrf.token ---------------------------------------------
+//------------------ Csurf protections to all the routes with csrf.token --------------------------------------------
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
 //------------------- formatting the email from handlebars to template -----------------------------------
-var template = fs.readFileSync('./views/apiemail.hbs', 'utf-8');
+var template = fs.readFileSync('./views/email.hbs', 'utf-8');
 var compiledTemplate = handlebars.compile(template);
 
 
@@ -63,6 +63,7 @@ router.get('/logout', isLoggedIn, function(req, res, next) {
 	  		user: req.user,
 	  		cart: cart,
 	  	});
+	  	// saving the present items in cart of the user whiling logging out
 	  	userCart.save(function(err, result) {
 	  		if(err) {
 	  			res.redirect('/');

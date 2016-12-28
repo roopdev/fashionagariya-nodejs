@@ -19,7 +19,6 @@ require('dotenv').config();
 //require all the route paths
 var routes = require('./routes/index');
 var user = require('./routes/user');
-var api = require('./routes/api');
 var blog = require('./routes/blog');
 
 // inhisialize the app to express
@@ -28,7 +27,7 @@ var app = express();
 //mongodb connection
 mongoose.connect(process.env.CONNECT);
 require('./config/passport');
-require('./config/apipassport');
+
 
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
@@ -63,7 +62,6 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/user', user);
-app.use('/api', api);
 app.use('/blog', blog);
 
 // catch 404 and forward to error handler
