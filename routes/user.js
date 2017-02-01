@@ -165,17 +165,23 @@ router.post('/login', passport.authenticate('local.signin', {
 	failureFlash: true
 }), function (req, res, next) {
 	//--------- How to retrieve the saved cart for the user ------------
-	// var user = req.user;
-	// console.log(user.id);
-	// UserCart.findOne({'userCart.user': user.id}, function(err, userCart) {
-	// 	if(err) {
-	// 		return res.status(404);
-	// 	}
-	// 		console.log(userCart.cart);
-	// 		var cart = new Cart(userCart.cart);
-	// 		req.session.cart = cart;
-	// 		console.log(cart);
-	// });
+	var user = req.user;
+	var cart;
+	console.log(user.id);
+	UserCart.find({user: req.user}, function(err, userCarts) {
+		if(err) {
+			return res.status(404);
+		}
+			//res.json({userCart: userCart});
+			
+			userCarts.forEach(function(userCart) {
+			cart = new Cart(userCart.cart);
+			userCart.items = cart.generateArray();
+			});
+			//res.json({cart: cart});
+			req.session.cart = cart;
+			//console.log(cart);
+	});
 	if (req.session.oldUrl) {
 		var oldUrl = req.session.oldUrl;
 		req.session.oldUrl = null;
